@@ -1,11 +1,11 @@
 import React from 'react';
 import './WeatherCard.css';
 
-function WeatherCard() {
+function WeatherCard({location}) {
   return (
     <div className="card-body1">
       <div className="card-top">
-        <h2>Location</h2>
+        <h2>{location}</h2>
         <h2>Time</h2>
       </div>
       <div className="card-middle">

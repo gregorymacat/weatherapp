@@ -2,22 +2,17 @@ import React from 'react';
 import WeatherCard from '../WeatherCard/WeatherCard.jsx';
 import './CardHolder.css';
 
-function CardHolder() {
+function CardHolder({locations}) {
   return (
-    <div className="card-container">
-      <WeatherCard/>
-      <WeatherCard/>
-      {/* <WeatherCard/>
-      <WeatherCard/>
-      <WeatherCard/>
-      <WeatherCard/>
-      <WeatherCard/>
-      <WeatherCard/>
-      <WeatherCard/>
-      <WeatherCard/>
-      <WeatherCard/>
-      <WeatherCard/> */}
-    </div>
+    <section id="content-section">
+      <div className="card-container">
+        {
+          locations.map(loc => (
+            <WeatherCard location={loc}/>
+          ))
+        }
+      </div>
+    </section>
   )
 }
 
