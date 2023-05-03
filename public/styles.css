@@ -1,0 +1,19 @@
+/*
+  Main Brand Color: #A5A4AA
+  Light on Dark Color: #F9F9F9
+  Background Color: #596C81
+  Dark Accent Color: #85929F
+  Light Accent Color: #A19E7E
+*/
+#app {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}
+.app-container {
+  height: 100%;
+  background-color: #596C81;
+  /* overflow-y: scroll; */
+}
