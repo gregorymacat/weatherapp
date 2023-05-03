@@ -2,29 +2,38 @@
   font-size: 12px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   color: rgb(75, 81, 93);
   border: 1px solid rgba(0,0,0,.125);
   border-radius: 35px;
   max-width: 80%;
   padding: 5%;
   background-color: #F9F9F9;
+  font-family: 'Nunito', sans-serif;
 }
 .card-top {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  font-size: 1em;
+  font-size: 1.4em;
 }
 .card-middle {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.card-middle h1 {
+  font-size: 3em;
+  font-weight: 800;
+}
+.card-middle h3 {
   font-size: 1.5em;
 }
 .card-bottom {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  font-size: 1.3em;
 }
 .card-weather-info {
   max-width: 30%;
