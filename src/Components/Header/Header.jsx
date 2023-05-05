@@ -50,7 +50,14 @@ function Header({addLocation}) {
   const handleSubmit = (event) => {
     const isValid = validateLocation(input);
     //won't need validation here anymore
-    //
+    
+    //if user never selected a suggested location (aka no suggestion object in state)
+      //need to get suggestion for and choose the first available one
+      //if no suggestions are returned
+        //need to prompt the user to enter a valid location, or choose from the options below
+
+    //once a suggested object is available
+    //call addLocation to send the suggestion object back to the App component
 
     if (isValid) {
       addLocation(input);
