@@ -6,6 +6,8 @@ const app = express();
 
 app.use(express.static('public'));
 
+const oneDayForecastRouter = require('./routes/users');
+
 app.listen(PORT, () => {
   console.log('App is listening on port: ', PORT);
 })
