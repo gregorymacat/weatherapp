@@ -6,3 +6,5 @@ const router = express.Router();
 // Takes latitude and longitude recieved from /retrieve in Mapbox's Search Box API
 // Passes those two as parameters to OpenWeather's oneDayForecast API 
 router.get('/oneDayForecast')
+
+module.exports = router;

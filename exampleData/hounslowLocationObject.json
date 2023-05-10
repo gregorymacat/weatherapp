@@ -1,0 +1,47 @@
+{
+  "geometry": {
+      "coordinates": [
+          -0.361347,
+          51.468613
+      ],
+      "type": "Point"
+  },
+  "properties": {
+      "name": "Hounslow",
+      "mapbox_id": "dXJuOm1ieHJldDpBcFBuX1JpdzhOdEhRMXE1SFdhendBTUVlMEdoa0dIQ0ItWWZMNl8wdE...",
+      "feature_type": "place",
+      "place_formatted": "Greater London, England, United Kingdom",
+      "context": {
+          "country": {
+              "id": "dXJuOm1ieHBsYzpJazg",
+              "name": "United Kingdom",
+              "country_code": "GB",
+              "country_code_alpha_3": "GBR"
+          },
+          "region": {
+              "id": "dXJuOm1ieHBsYzpKRTg",
+              "name": "England",
+              "region_code": "ENG",
+              "region_code_full": "GB-ENG"
+          },
+          "district": {
+              "id": "dXJuOm1ieHBsYzpDUVpQ",
+              "name": "Greater London"
+          }
+      },
+      "coordinates": {
+          "latitude": 51.468613,
+          "longitude": -0.361347
+      },
+      "bbox": [
+          -0.495975,
+          51.445456,
+          -0.345688,
+          51.495271
+      ],
+      "language": "en",
+      "maki": "marker",
+      "external_ids": {},
+      "metadata": {}
+  }
+}
