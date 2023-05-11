@@ -41,7 +41,7 @@ router.get('/search', (req, res) => {
       res.status(200).send(modifiedSuggestions);
     })
     .catch(err => {
-      console.error(err);
+      console.error('Error making suggest request to SearchBox API: ', err);
       res.sendStatus(400);
     })
 });
@@ -70,7 +70,7 @@ router.get('/retrieve', (req, res) => {
       }
     })
     .catch(err => {
-      console.error(err);
+      console.error('Error making retrieve request to SearchBox API: ', err);
       res.sendStatus(400);
     })
 });

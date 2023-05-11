@@ -12,7 +12,7 @@ app.use(morgan('tiny'));
 const forecastRouter = require('./routes/forecasts');
 const locationRouter = require('./routes/locations');
 
-// app.use(forecastRouter);
+app.use('/forecasts', forecastRouter);
 app.use('/suggestions', locationRouter);
 
 app.listen(PORT, () => {

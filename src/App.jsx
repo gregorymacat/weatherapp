@@ -9,7 +9,8 @@ function App() {
   //these locations will have a latitude, longitude, name and other info
   //lat and long will be sent to back end to store weather data for locations
   
-  const [locations, setLocations] = useState(['Houston, TX']);
+  const [locations, setLocations] = useState([]);
+  const [unitType, setUnitType] = useState('imperial');
 
   //create weather object to store each location's weather data
   // {[city,state,country]: misc. weather data}
@@ -26,13 +27,15 @@ function App() {
     const updatedLocations = locations.slice();
     
     updatedLocations.push(loc);
+    console.log('This is updated locations: ', updatedLocations)
+
     setLocations(updatedLocations);
   }
 
   return (
     <div className="app-container">
       <Header addLocation={addLocation}/>
-      <CardHolder locations={locations}/>
+      <CardHolder locations={locations} units={unitType}/>
       <Footer/>
     </div>
   )

@@ -17,6 +17,8 @@ const sessionToken = uuidv4();
 function Header({addLocation}) {
   const [input, setInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
+  // const [chosenLocation, setChosenLocation] = useState({});
+  const [chosenLocation, setChosenLocation] = useState({locale: 'Houston', name: 'Houston Texas, United States', lat: 29.758938, lon: -95.367697});
 
   const handleChange = (event) => {
     const userInput = event.target.value;
@@ -48,11 +50,22 @@ function Header({addLocation}) {
     })
       .then(response => {
         const locationData = response.data;
+        const formattedLocation = {
+          locale: locationData.properties.name,
+          name: `${locationData.properties.name} ${locationData.properties.place_formatted}`,
+          lat: locationData.properties.coordinates.latitude,
+          lon: locationData.properties.coordinates.longitude,
+        }
         console.log('Retrieved location:\n', locationData);
 
         //fill location information from that retrieve object into the input box
         //city, (state) zip, country
         //example data returned in /weatherapp/exampleData/ json files in here
+
+        //set location's longitude and latitude somewhere it can be used by weather card
+        //to retrieve weather data for that location
+        setInput(formattedLocation.name);
+        setChosenLocation(formattedLocation);
       })
       .catch(err => {
         console.error(err);
@@ -60,9 +73,6 @@ function Header({addLocation}) {
   }
 
   const handleSubmit = (event) => {
-    const isValid = validateLocation(input);
-    //won't need validation here anymore
-    
     //if user never selected a suggested location (aka no suggestion object in state)
       //need to get suggestion for and choose the first available one
       //if no suggestions are returned
@@ -71,8 +81,8 @@ function Header({addLocation}) {
     //once a suggested object is available
     //call addLocation to send the suggestion object back to the App component
 
-    if (isValid) {
-      addLocation(input);
+    if (Object.keys(chosenLocation).length !== 0) {
+      addLocation(chosenLocation);
     } else {
       //display error above input bar explaining how to use app
     }
