@@ -10,18 +10,7 @@ function App() {
   //lat and long will be sent to back end to store weather data for locations
   
   const [locations, setLocations] = useState([]);
-  const [unitType, setUnitType] = useState('imperial');
-
-  //create weather object to store each location's weather data
-  // {[city,state,country]: misc. weather data}
-
-  //create function to retrieve weather data
-  const retrieveWeatherData = () => {
-    //call backend route for getting weather API data
-    //http://localhost:3000/oneDayForecast?lat={suggested location's latitude}&long={suggested location's longitude}
-
-    //set weather data for this location using name from the location object
-  }
+  const [unitType, setUnitType] = useState('imperial'); //TODO: be able to change unit type
 
   const addLocation = (loc) => {
     const updatedLocations = locations.slice();

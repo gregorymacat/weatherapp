@@ -14,7 +14,7 @@ router.get('/currentWeather', (req, res) => {
     params: {
       lat,
       lon,
-      units: 'imperial', //Add options for this eventually
+      units: 'imperial', //TODO: Add options for this eventually
       appid: process.env.OPENWEATHER_KEY,
     }
   })
@@ -27,5 +27,8 @@ router.get('/currentWeather', (req, res) => {
       res.sendStatus(400);
     })
 })
+
+//need to add route for forecasted weather. this will allow showing precipication %
+//and eventually the chart that shows different weather conditions throughout the day (temp, precip, wind, ...etc)
 
 module.exports = router;

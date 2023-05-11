@@ -15,6 +15,7 @@ import './Header.css';
 const sessionToken = uuidv4();
 
 function Header({addLocation}) {
+  //TODO: add logic for autocomplete location in search bar
   const [input, setInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   // const [chosenLocation, setChosenLocation] = useState({});
@@ -73,7 +74,8 @@ function Header({addLocation}) {
   }
 
   const handleSubmit = (event) => {
-    //if user never selected a suggested location (aka no suggestion object in state)
+    //TODO: handle manually typed in locations
+    //if user never selected a suggested location (aka no chosenLocation object in state)
       //need to get suggestion for and choose the first available one
       //if no suggestions are returned
         //need to prompt the user to enter a valid location, or choose from the options below
