@@ -33,7 +33,7 @@ router.get('/search', (req, res) => {
             name,
             namePreferred: name_preferred,
             mapboxId: mapbox_id,
-            placeFormatted: place_formatted,
+            place_formatted,
           })
         })
       }
@@ -46,6 +46,16 @@ router.get('/search', (req, res) => {
     })
 });
 
+/*
+  Retrieves location data from suggestion object selected using mapbox API. 
+  @param {object} req - Request object needs to have mapbox ID (id) and user's session token
+  (sessionToken) in its parameters
+  @returns {object}
+    name: Local name
+    place_formatted: Local name + region name, country name
+    context: country information, region information, district information
+    coordinates: latitude, longitude
+*/
 router.get('/retrieve', (req, res) => {
   const { id, sessionToken } = req.query;
   console.log('This is the mapbox ID: ', id);
@@ -60,13 +70,19 @@ router.get('/retrieve', (req, res) => {
     .then(response => {
       if (response.data.features) {
         const {
-          geometry,
-          properties,
-        } = response.data.features[0];
-
-        console.log('Server side: ', response.data.features[0]);
+          name,
+          place_formatted,
+          context,
+          coordinates,
+        } = response.data.features[0].properties;
+        console.log('Server side retrieve object: ', response.data.features[0]);
         
-        res.status(200).send({geometry, properties});
+        res.status(200).send({
+          name,
+          place_formatted,
+          context,
+          coordinates,
+        });
       }
     })
     .catch(err => {

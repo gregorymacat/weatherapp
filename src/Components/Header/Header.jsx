@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -21,8 +21,13 @@ function Header({addLocation}) {
   // const [chosenLocation, setChosenLocation] = useState({});
   const [chosenLocation, setChosenLocation] = useState({locale: 'Houston', name: 'Houston Texas, United States', lat: 29.758938, lon: -95.367697});
 
+  useEffect(() => {
+    autofillInputField();
+  }, [chosenLocation])
+
   const handleChange = (event) => {
     const userInput = event.target.value;
+    setInput(userInput);
     
     axios.get('/suggestions/search', {
       params: {
@@ -31,7 +36,8 @@ function Header({addLocation}) {
       }
     })
       .then(response => {
-        setSuggestions(response.data);
+        const localizedSuggestions = response.data.filter((location) => !!location.context.region);
+        setSuggestions(localizedSuggestions);
       })
       .catch(err => {
         console.error(err);
@@ -51,11 +57,13 @@ function Header({addLocation}) {
     })
       .then(response => {
         const locationData = response.data;
+        console.log
         const formattedLocation = {
-          locale: locationData.properties.name,
-          name: `${locationData.properties.name} ${locationData.properties.place_formatted}`,
-          lat: locationData.properties.coordinates.latitude,
-          lon: locationData.properties.coordinates.longitude,
+          locale: locationData.name,
+          region: locationData.context.region.region_code,
+          name: `${locationData.name}, ${locationData.place_formatted}`,
+          lat: locationData.coordinates.latitude,
+          lon: locationData.coordinates.longitude,
         }
         console.log('Retrieved location:\n', locationData);
 
@@ -65,12 +73,20 @@ function Header({addLocation}) {
 
         //set location's longitude and latitude somewhere it can be used by weather card
         //to retrieve weather data for that location
-        setInput(formattedLocation.name);
         setChosenLocation(formattedLocation);
       })
       .catch(err => {
         console.error(err);
       });
+  }
+
+  const autofillInputField = () => {
+    //get input field with search-location-input ID
+    //set its value to chosenLocation.placeFormatted
+    //set input to the same value as well
+    const searchInput = document.getElementById('search-location-input');
+    searchInput.value = chosenLocation.name;
+    setInput(chosenLocation.name);
   }
 
   const handleSubmit = (event) => {
@@ -102,7 +118,7 @@ function Header({addLocation}) {
     <section id="header">
       <h1>Weather</h1>
       <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="City, State (or Country)" onChange={handleChange}></input>
+        <input id="search-location-input" type="text" placeholder="City, State (or Country)" onChange={handleChange}></input>
         <Suggestions locationSuggestions={suggestions} chooseSuggestion={chooseSuggestion}/>
       </form>
     </section>

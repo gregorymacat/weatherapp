@@ -36,7 +36,7 @@ function WeatherCard({location, units}) {
   return (
     <div className="card-body1">
       <div className="card-top">
-        <h2>{location.name}</h2>
+        <h2>{location.name}, {location.region}</h2>
         <h2>{time}</h2>
       </div>
       <div className="card-middle">

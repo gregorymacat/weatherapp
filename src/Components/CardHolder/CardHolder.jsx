@@ -26,6 +26,7 @@ function CardHolder({locations, units}) {
         console.log('This is the weather info: ', weatherInfo);
         const locationData = {
           name: location.locale,
+          region: location.region,
           weatherInfo,
         }
         const allLocations = weatherData.slice();
