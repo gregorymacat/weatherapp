@@ -1,0 +1,58 @@
+{
+  "coord": {
+      "lon": -81.3819,
+      "lat": 28.543
+  },
+  "weather": [
+      {
+          "id": 211,
+          "main": "Thunderstorm",
+          "description": "thunderstorm",
+          "icon": "11d"
+      },
+      {
+          "id": 701,
+          "main": "Mist",
+          "description": "mist",
+          "icon": "50d"
+      },
+      {
+          "id": 501,
+          "main": "Rain",
+          "description": "moderate rain",
+          "icon": "10d"
+      }
+  ],
+  "base": "stations",
+  "main": {
+      "temp": 78.6,
+      "feels_like": 80.26,
+      "temp_min": 73.33,
+      "temp_max": 83.05,
+      "pressure": 1012,
+      "humidity": 87
+  },
+  "visibility": 4828,
+  "wind": {
+      "speed": 11.5,
+      "deg": 70
+  },
+  "rain": {
+      "1h": 3.14
+  },
+  "clouds": {
+      "all": 100
+  },
+  "dt": 1684876602,
+  "sys": {
+      "type": 1,
+      "id": 4852,
+      "country": "US",
+      "sunrise": 1684837871,
+      "sunset": 1684887219
+  },
+  "timezone": -14400,
+  "id": 4167147,
+  "name": "Orlando",
+  "cod": 200
+}

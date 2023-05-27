@@ -15,7 +15,6 @@ import './Header.css';
 const sessionToken = uuidv4();
 
 function Header({addLocation}) {
-  //TODO: add logic for autocomplete location in search bar
   const [input, setInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   // const [chosenLocation, setChosenLocation] = useState({});
@@ -116,7 +115,10 @@ function Header({addLocation}) {
   //need to place suggestions component beneath input element
   return (
     <section id="header">
-      <h1>Weather</h1>
+      <div className="title-container">
+        <h1>Weather</h1>
+        <img src="titleicon.png"></img>
+      </div>
       <form onSubmit={handleSubmit}>
         <input id="search-location-input" type="text" placeholder="City, State (or Country)" onChange={handleChange}></input>
         <Suggestions locationSuggestions={suggestions} chooseSuggestion={chooseSuggestion}/>

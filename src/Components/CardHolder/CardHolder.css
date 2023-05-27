@@ -2,7 +2,11 @@
   position: relative;
   height: 95%;
   width: 100%;
-  background-color: #596C81;
+  background-color: #ebebeb;
+  /* 
+  background-image: url("../../../assets/sunnyskywithclouds.jpg");
+  background-repeat: no-repeat;
+  background-size: contain; */
 }
 .card-container {
   display: grid;

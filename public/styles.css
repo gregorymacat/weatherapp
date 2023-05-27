@@ -5,12 +5,39 @@
   Dark Accent Color: #85929F
   Light Accent Color: #A19E7E
 */
+/* width */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(180deg, #5cedf1fa 0%, #708ad4 99%);
+  box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
+  border-radius: 100px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 #app {
   position: absolute;
   top: 0px;
   bottom: 0px;
   left: 0px;
   right: 0px;
+  /* background-image: url("sunnyskywithclouds.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom center; */
 }
 .app-container {
   height: 100%;

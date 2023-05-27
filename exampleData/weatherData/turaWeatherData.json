@@ -1,0 +1,47 @@
+{
+  "coord": {
+      "lon": 100.2061,
+      "lat": 64.2762
+  },
+  "weather": [
+      {
+          "id": 600,
+          "main": "Snow",
+          "description": "light snow",
+          "icon": "13d"
+      }
+  ],
+  "base": "stations",
+  "main": {
+      "temp": 34.84,
+      "feels_like": 26.01,
+      "temp_min": 34.84,
+      "temp_max": 34.84,
+      "pressure": 1006,
+      "humidity": 96,
+      "sea_level": 1006,
+      "grnd_level": 982
+  },
+  "visibility": 1614,
+  "wind": {
+      "speed": 12.88,
+      "deg": 3,
+      "gust": 26.98
+  },
+  "snow": {
+      "1h": 0.12
+  },
+  "clouds": {
+      "all": 100
+  },
+  "dt": 1684876081,
+  "sys": {
+      "country": "RU",
+      "sunrise": 1684870588,
+      "sunset": 1684940145
+  },
+  "timezone": 25200,
+  "id": 2014833,
+  "name": "Tura",
+  "cod": 200
+}

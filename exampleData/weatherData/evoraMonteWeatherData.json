@@ -1,0 +1,47 @@
+{
+  "coord": {
+      "lon": 38.7653,
+      "lat": 7.716
+  },
+  "weather": [
+      {
+          "id": 500,
+          "main": "Rain",
+          "description": "light rain",
+          "icon": "10n"
+      }
+  ],
+  "base": "stations",
+  "main": {
+      "temp": 65.68,
+      "feels_like": 65.89,
+      "temp_min": 65.68,
+      "temp_max": 65.68,
+      "pressure": 1016,
+      "humidity": 84,
+      "sea_level": 1016,
+      "grnd_level": 846
+  },
+  "visibility": 10000,
+  "wind": {
+      "speed": 3.38,
+      "deg": 207,
+      "gust": 5.61
+  },
+  "rain": {
+      "1h": 0.63
+  },
+  "clouds": {
+      "all": 72
+  },
+  "dt": 1684875631,
+  "sys": {
+      "country": "ET",
+      "sunrise": 1684897594,
+      "sunset": 1684942633
+  },
+  "timezone": 10800,
+  "id": 325579,
+  "name": "Ziway",
+  "cod": 200
+}

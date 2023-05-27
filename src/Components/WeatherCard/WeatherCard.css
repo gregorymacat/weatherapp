@@ -5,7 +5,7 @@
   justify-content: space-between;
   color: rgb(75, 81, 93);
   border: 1px solid rgba(0,0,0,.125);
-  border-radius: 35px;
+  border-radius: 25px;
   max-width: 80%;
   padding: 5%;
   background-color: #F9F9F9;
@@ -16,6 +16,9 @@
   flex-direction: row;
   justify-content: space-between;
   font-size: 1.4em;
+}
+.card-top #location-name {
+  font-weight: 800;
 }
 .card-middle {
   display: flex;
@@ -33,8 +36,27 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   font-size: 1.3em;
 }
+.card-bottom img {
+  margin-right: 10%;
+}
 .card-weather-info {
-  max-width: 30%;
+  max-width: 50%;
+}
+.card-weather-info * {
+  padding-top: 2px;
+}
+.card-wind-speed {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.card-sun-times div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }

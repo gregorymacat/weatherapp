@@ -2,6 +2,7 @@ import React from 'react';
 import './WeatherCard.css';
 
 function WeatherCard({location, units}) {
+  //TODO: Need to be able to remove a card
   const getCurrentTime = (timezoneOffset) => {
     const date = new Date();
     const utc = date.getTime() + (date.getTimezoneOffset() * 60000);
@@ -33,10 +34,11 @@ function WeatherCard({location, units}) {
   const sunriseTime = convertUnixTime(location.weatherInfo.sys.sunrise);
   const sunsetTime = convertUnixTime(location.weatherInfo.sys.sunset);
 
+  //TODO: Add icons for different weather conditions, .weather[0].description
   return (
     <div className="card-body1">
       <div className="card-top">
-        <h2>{location.name}, {location.region}</h2>
+        <h2 id="location-name">{location.name}, {location.region}</h2>
         <h2>{time}</h2>
       </div>
       <div className="card-middle">
@@ -45,14 +47,23 @@ function WeatherCard({location, units}) {
       </div>
       <div className="card-bottom">
         <div className="card-weather-info">
-          <h2>{windSpeed}</h2>
+          <div className="card-wind-speed">
+            <h2>{windSpeed}</h2>
+            <img src="windspeed.png" width="22px" height="22px"></img>
+          </div>
           <h2>Precipitation %</h2>
           <div className="card-sun-times">
-            <h2>{sunriseTime}</h2>
-            <h2>{sunsetTime}</h2>
+            <div>
+              <h2>{sunriseTime}</h2>
+              <img src="sunrise.png" width="25px" height="25px"></img>
+            </div>
+            <div>
+              <h2>{sunsetTime}</h2>
+              <img src="sunset.png" width="25px" height="25px"></img>
+            </div>
           </div>
         </div>
-        <img alt="weather condition image"></img>
+        <img src="sun.png" width="60px" height="60px"></img>
       </div>
     </div>
   )

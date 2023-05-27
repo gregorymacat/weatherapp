@@ -10,7 +10,8 @@ function App() {
   //lat and long will be sent to back end to store weather data for locations
   
   const [locations, setLocations] = useState([]);
-  const [unitType, setUnitType] = useState('imperial'); //TODO: be able to change unit type
+  //TODO: be able to change unit type to metric
+  const [unitType, setUnitType] = useState('imperial'); 
 
   const addLocation = (loc) => {
     const updatedLocations = locations.slice();

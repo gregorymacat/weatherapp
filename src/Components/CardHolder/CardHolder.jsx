@@ -1,11 +1,19 @@
 import React, {useState, useEffect} from 'react';
-import WeatherCard from '../WeatherCard/WeatherCard.jsx';
 import axios from 'axios';
+
+import WeatherCard from '../WeatherCard/WeatherCard.jsx';
+import exampleWeatherData from '../../../exampleData/weatherData/houstonWeatherData.json';
 import './CardHolder.css';
 
 function CardHolder({locations, units}) {
-  const [weatherData, setWeatherData] = useState([]);
+  const [weatherData, setWeatherData] = useState([{
+    name: 'Houston',
+    region: 'TX',
+    weatherInfo: exampleWeatherData,
+  }]);
 
+  // !This should make API calls using Suspense instead of useEffect
+  // ?It might also need a try catch block, look into it
   useEffect(() => {
     if (locations.length > 0) {
       const lastLocation = locations[locations.length - 1];
@@ -29,11 +37,11 @@ function CardHolder({locations, units}) {
           region: location.region,
           weatherInfo,
         }
-        const allLocations = weatherData.slice();
+        const allLocationsWeatherData = weatherData.slice();
 
         console.log('This is the response from my API: ', weatherInfo);
-        allLocations.push(locationData);
-        setWeatherData(allLocations);
+        allLocationsWeatherData.push(locationData);
+        setWeatherData(allLocationsWeatherData);
       })
       .catch(err => {
         console.error('Error making request to /forecasts/currentWeather: ', err);
