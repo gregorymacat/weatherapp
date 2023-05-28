@@ -25,6 +25,23 @@ function WeatherCard({location, units}) {
       return `${location.weatherInfo.main.temp}°C`
     }
   }
+  const selectWeatherIcon = (condition) => {
+    switch (condition) {
+      //Snow
+      //Thunderstorm
+      //Rain
+      case 'Rain':
+        return <img src="water-drops.png" width="60px" height="60px"></img>
+      case 'Snow':
+        return <img src="snowflakes.png" width="60px" height="60px"></img>
+      case 'Thunderstorm':
+        return <img src="bolt.png" width="60px" height="60px"></img>
+      case 'Clear':
+        return <img src="sun.png" width="60px" height="60px"></img>
+      default:
+        return <img src="sun.png" width="60px" height="60px"></img>
+    }
+  }
 
   const time = getCurrentTime(location.weatherInfo.timezone);
   const temp = formatTemperature();
@@ -34,7 +51,6 @@ function WeatherCard({location, units}) {
   const sunriseTime = convertUnixTime(location.weatherInfo.sys.sunrise);
   const sunsetTime = convertUnixTime(location.weatherInfo.sys.sunset);
 
-  //TODO: Add icons for different weather conditions, .weather[0].description
   return (
     <div className="card-body1">
       <div className="card-top">
@@ -63,7 +79,8 @@ function WeatherCard({location, units}) {
             </div>
           </div>
         </div>
-        <img src="sun.png" width="60px" height="60px"></img>
+        {/* Weather conditions should be dynamically generated icons here */}
+        {selectWeatherIcon(location.weatherInfo.weather[0].main)}
       </div>
     </div>
   )
