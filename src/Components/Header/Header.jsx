@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
+import locationRequests from '../../Helpers/Requests/locations';
 import Suggestions from '../Suggestions/Suggestions.jsx';
 import './Header.css';
 
@@ -17,30 +18,29 @@ const sessionToken = uuidv4();
 function Header({addLocation}) {
   const [input, setInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
-  // const [chosenLocation, setChosenLocation] = useState({});
+  const [showSearchError, setShowSearchError] = useState(false);
   const [chosenLocation, setChosenLocation] = useState({locale: 'Houston', name: 'Houston Texas, United States', lat: 29.758938, lon: -95.367697});
 
   useEffect(() => {
     autofillInputField();
   }, [chosenLocation])
 
-  const handleChange = (event) => {
+  const handleChange = async (event) => {
     const userInput = event.target.value;
     setInput(userInput);
-    
-    axios.get('/suggestions/search', {
-      params: {
-        'searchText': userInput,
-        'sessionToken': sessionToken,
-      }
-    })
-      .then(response => {
-        const localizedSuggestions = response.data.filter((location) => !!location.context.region);
+
+    try {
+      const localizedSuggestions = await locationRequests.getSuggestions(userInput, sessionToken);
+      if (localizedSuggestions.length > 0) {
         setSuggestions(localizedSuggestions);
-      })
-      .catch(err => {
-        console.error(err);
-      });
+      } else {
+        console.log('Setting boolean to true')
+        setShowSearchError(true);
+      }
+    } catch (err) {
+      console.error('Incomplete location suggestions request: ', err);
+      setShowSearchError(true);
+    }
   }
 
   const chooseSuggestion = (mapboxId) => {
@@ -73,6 +73,7 @@ function Header({addLocation}) {
         //set location's longitude and latitude somewhere it can be used by weather card
         //to retrieve weather data for that location
         setChosenLocation(formattedLocation);
+        if (showSearchError) setShowSearchError(false);
       })
       .catch(err => {
         console.error(err);
@@ -88,7 +89,7 @@ function Header({addLocation}) {
     setInput(chosenLocation.name);
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     //TODO: handle manually typed in locations
     //if user never selected a suggested location (aka no chosenLocation object in state)
       //need to get suggestion for and choose the first available one
@@ -102,6 +103,13 @@ function Header({addLocation}) {
       addLocation(chosenLocation);
     } else {
       //display error above input bar explaining how to use app
+      const localizedSuggestions = await locationRequests.getSuggestions(input, sessionToken);
+      if (localizedSuggestions.length > 0) {
+        setChosenLocation(localizedSuggestions[0]);
+        if (showSearchError) setShowSearchError(false);
+      } else {
+        setShowSearchError(true);
+      }
     }
     event.preventDefault();
   }
@@ -120,6 +128,11 @@ function Header({addLocation}) {
         <img src="titleicon.png"></img>
       </div>
       <form onSubmit={handleSubmit}>
+        {
+          showSearchError ? 
+            <span>Please enter a valid location or choose from the options below</span> 
+            : null
+        }
         <input id="search-location-input" type="text" placeholder="City, State (or Country)" onChange={handleChange}></input>
         <Suggestions locationSuggestions={suggestions} chooseSuggestion={chooseSuggestion}/>
       </form>

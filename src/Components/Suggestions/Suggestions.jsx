@@ -16,18 +16,18 @@ function Suggestions({locationSuggestions, chooseSuggestion}) {
     chooseSuggestion(mapboxId);
   }
   return (
-    <div className="suggestions">
+    <ul className="suggestions">
       {
         locationSuggestions.map((location, idx) => {
           console.log('This is a location: ', location);
           return (
-            <div id={`${location.name}-${idx}`}>
-              <span id={idx} onClick={handleClick}>{location.name}, {location.context.region.region_code}</span>
-            </div>
+            <li id={`${location.name}-${idx}`} onClick={handleClick}>
+              {location.name}, {location.context.region.region_code}
+            </li>
           )
         })
       }
-    </div>
+    </ul>
   )
 }
 

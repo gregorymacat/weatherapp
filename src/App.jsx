@@ -9,6 +9,8 @@ function App() {
   //these locations will have a latitude, longitude, name and other info
   //lat and long will be sent to back end to store weather data for locations
   
+  //TODO: Handle long location names
+  //TODO: Make sure locations aren't too long of names somehow
   const [locations, setLocations] = useState([]);
   //TODO: be able to change unit type to metric
   const [unitType, setUnitType] = useState('imperial'); 

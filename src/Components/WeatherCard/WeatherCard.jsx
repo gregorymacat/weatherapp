@@ -51,6 +51,7 @@ function WeatherCard({location, units}) {
   const sunriseTime = convertUnixTime(location.weatherInfo.sys.sunrise);
   const sunsetTime = convertUnixTime(location.weatherInfo.sys.sunset);
 
+  //TODO: Add precipitation maybe? Either that or it can be on other side of card
   return (
     <div className="card-body1">
       <div className="card-top">
@@ -67,7 +68,7 @@ function WeatherCard({location, units}) {
             <h2>{windSpeed}</h2>
             <img src="windspeed.png" width="22px" height="22px"></img>
           </div>
-          <h2>Precipitation %</h2>
+          {/* <h2>Precipitation %</h2> */}
           <div className="card-sun-times">
             <div>
               <h2>{sunriseTime}</h2>

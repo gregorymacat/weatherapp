@@ -18,6 +18,7 @@ const evoraExampleData = {
   weatherInfo: exampleEvoWeatherData
 }
 
+//TODO: Add explanation text when there are no cards yet "Search for location above please" or something
 function CardHolder({locations, units}) {
   const [weatherData, setWeatherData] = useState([houstonExampleData, evoraExampleData]);
 
@@ -61,9 +62,11 @@ function CardHolder({locations, units}) {
     <section id="content-section">
       <div className="card-container">
         {
-          weatherData.map(loc => (
-            <WeatherCard location={loc} units={units}/>
-          ))
+          weatherData.length > 0 ? 
+            weatherData.map(loc => (
+              <WeatherCard location={loc} units={units}/>
+            ))
+            : <span>Please search for a location above</span>
         }
       </div>
     </section>

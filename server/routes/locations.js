@@ -42,7 +42,7 @@ router.get('/search', (req, res) => {
     })
     .catch(err => {
       console.error('Error making suggest request to SearchBox API: ', err);
-      res.sendStatus(400);
+      res.status(err.response.status).send(err);
     })
 });
 
