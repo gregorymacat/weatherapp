@@ -9,7 +9,7 @@ function Suggestions({locationSuggestions, chooseSuggestion}) {
   //pass the suggestion object of the corresponding box to handleClick
 
   const handleClick = (event) => {
-    const suggestionIndex = event.target.id;
+    const suggestionIndex = event.target.id.split('-')[1];
     console.log('Index chosen: ', suggestionIndex);
     const {mapboxId} = locationSuggestions[suggestionIndex];
 

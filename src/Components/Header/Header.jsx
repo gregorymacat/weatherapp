@@ -19,7 +19,8 @@ function Header({addLocation}) {
   const [input, setInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [showSearchError, setShowSearchError] = useState(false);
-  const [chosenLocation, setChosenLocation] = useState({locale: 'Houston', name: 'Houston Texas, United States', lat: 29.758938, lon: -95.367697});
+  //{locale: 'Houston', name: 'Houston Texas, United States', lat: 29.758938, lon: -95.367697}
+  const [chosenLocation, setChosenLocation] = useState({});
 
   useEffect(() => {
     autofillInputField();
@@ -31,7 +32,9 @@ function Header({addLocation}) {
 
     try {
       const localizedSuggestions = await locationRequests.getSuggestions(userInput, sessionToken);
+      console.log('Setting locations here: ', localizedSuggestions)
       if (localizedSuggestions.length > 0) {
+        console.log('Setting locations here: ', localizedSuggestions)
         setSuggestions(localizedSuggestions);
       } else {
         console.log('Setting boolean to true')
@@ -111,7 +114,6 @@ function Header({addLocation}) {
         setShowSearchError(true);
       }
     }
-    event.preventDefault();
   }
 
   const validateLocation = (loc) => {

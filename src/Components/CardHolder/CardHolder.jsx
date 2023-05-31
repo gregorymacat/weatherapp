@@ -20,7 +20,8 @@ const evoraExampleData = {
 
 //TODO: Add explanation text when there are no cards yet "Search for location above please" or something
 function CardHolder({locations, units}) {
-  const [weatherData, setWeatherData] = useState([houstonExampleData, evoraExampleData]);
+  //[houstonExampleData, evoraExampleData]
+  const [weatherData, setWeatherData] = useState([]);
 
   // !This should make API calls using Suspense instead of useEffect
   // ?It might also need a try catch block, look into it

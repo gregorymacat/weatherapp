@@ -2,15 +2,18 @@ import axios from 'axios';
 
 const locationRequests = {
   getSuggestions: async (input, sessionToken) => {
-    await axios.get('/suggestions/search', {
+    return await axios.get('/suggestions/search', {
       params: {
         'searchText': input,
         'sessionToken': sessionToken,
       }
     })
       .then(response => {
+        console.log('These are the suggestions: ', response.data);
+
         const localizedSuggestions = response.data.filter((location) => !!location.context.region);
-        return localizedSuggestions || [];
+        console.log('These are the localizedSuggestions: ', localizedSuggestions);
+        return localizedSuggestions;
       })
       .catch(err => {
         throw err;
