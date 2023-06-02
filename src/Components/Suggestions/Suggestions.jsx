@@ -10,7 +10,6 @@ function Suggestions({locationSuggestions, chooseSuggestion}) {
 
   const handleClick = (event) => {
     const suggestionIndex = event.target.id.split('-')[1];
-    console.log('Index chosen: ', suggestionIndex);
     const {mapboxId} = locationSuggestions[suggestionIndex];
 
     chooseSuggestion(mapboxId);
@@ -19,7 +18,6 @@ function Suggestions({locationSuggestions, chooseSuggestion}) {
     <ul className="suggestions">
       {
         locationSuggestions.map((location, idx) => {
-          console.log('This is a location: ', location);
           return (
             <li id={`${location.name}-${idx}`} onClick={handleClick}>
               {location.name}, {location.context.region.region_code}

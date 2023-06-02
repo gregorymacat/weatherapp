@@ -58,7 +58,6 @@ router.get('/search', (req, res) => {
 */
 router.get('/retrieve', (req, res) => {
   const { id, sessionToken } = req.query;
-  console.log('This is the mapbox ID: ', id);
   const inDevelopment = process.env.APPLICATION_MODE === 'development';
 
   axios.get(`https://api.mapbox.com/search/searchbox/v1/retrieve/${id}`, {
@@ -75,7 +74,6 @@ router.get('/retrieve', (req, res) => {
           context,
           coordinates,
         } = response.data.features[0].properties;
-        console.log('Server side retrieve object: ', response.data.features[0]);
         
         res.status(200).send({
           name,
@@ -87,7 +85,7 @@ router.get('/retrieve', (req, res) => {
     })
     .catch(err => {
       console.error('Error making retrieve request to SearchBox API: ', err);
-      res.sendStatus(400);
+      res.status(err.response.status).send(err);
     })
 });
 

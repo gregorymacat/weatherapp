@@ -15,10 +15,9 @@ const houstonExampleData = {
 const evoraExampleData = {
   name: 'Evoramonte',
   region: 'PT',
-  weatherInfo: exampleEvoWeatherData
+  weatherInfo: exampleEvoWeatherData,
 }
 
-//TODO: Add explanation text when there are no cards yet "Search for location above please" or something
 function CardHolder({locations, units}) {
   //[houstonExampleData, evoraExampleData]
   const [weatherData, setWeatherData] = useState([]);
@@ -27,36 +26,81 @@ function CardHolder({locations, units}) {
   // ?It might also need a try catch block, look into it
   useEffect(() => {
     if (locations.length > 0) {
-      const lastLocation = locations[locations.length - 1];
-      console.log('Getting weather data for: ', lastLocation);
-      getWeatherData(lastLocation)
+      // const lastLocation = locations[locations.length - 1];
+
+      // getOneLocationsWeatherData(lastLocation);
+      getAllLocationsWeatherData();
     }
-  }, [locations]);
+  }, [locations, units]);
 
-  const getWeatherData = (location) => {
-    axios.get('/forecasts/currentWeather', {
-      params: {
-        lat: location.lat,
-        lon: location.lon,
-      }
-    })
-      .then(response => {
-        const weatherInfo = response.data;
-        console.log('This is the weather info: ', weatherInfo);
-        const locationData = {
-          name: location.locale,
-          region: location.region,
-          weatherInfo,
+  const getOneLocationsWeatherData = (location) => {
+    console.log('Creating promise to be returned');
+    return new Promise((resolve, reject) => {
+      console.log('Getting one locations weather data');
+      axios.get('/forecasts/currentWeather', {
+        params: {
+          lat: location.lat,
+          lon: location.lon,
+          units,
         }
-        const allLocationsWeatherData = weatherData.slice();
+      })
+        .then(response => {
+          const weatherInfo = response.data;
+          const locationData = {
+            name: location.locale,
+            region: location.region,
+            weatherInfo,
+          }
+          console.log('Returning one locations weather data: ', locationData);
+  
+          resolve(locationData);
+        })
+        .catch(err => {
+          console.error('Error making request to /forecasts/currentWeather: ', err);
+          reject(err);
+        })
+    })
+    
+  }
 
-        console.log('This is the response from my API: ', weatherInfo);
-        allLocationsWeatherData.push(locationData);
-        setWeatherData(allLocationsWeatherData);
+  const getAllLocationsWeatherData = () => {
+    console.log('Creating promises of all locations weather data')
+    const weatherDataPromises = locations.map(location => {
+      return getOneLocationsWeatherData(location);
+      // return new Promise((resolve, reject) => {
+      //   const weatherData = getOneLocationsWeatherData(location);
+
+      //   if (weatherData.name) {
+      //     resolve(weatherData);
+      //   } else {
+      //     reject();
+      //   }
+      // })
+    });
+    
+    weatherDataPromises.push(new Promise((resolve, reject) => {
+      setTimeout(() => reject('Took a while to fail'), 5000);
+    }))
+    console.log('Created promises of all locations weather data: ', weatherDataPromises)
+
+    console.log('Calling promises of all locations weather data')
+
+    Promise.allSettled(weatherDataPromises)
+      .then((results) => {
+        console.log('All promises settled')
+        const fulfilledWeatherData = [];
+
+        results.forEach((result) => {
+          if (result.status === 'fulfilled') {
+            fulfilledWeatherData.push(result.value);
+          }
+          //TODO: Add error card that lets user know there was an issue getting data for that location, if status is rejected
+        })
+        console.log('Fulfilled weather data: ', fulfilledWeatherData);
+        setWeatherData(fulfilledWeatherData);
       })
-      .catch(err => {
-        console.error('Error making request to /forecasts/currentWeather: ', err);
-      })
+    
+    console.log('Finishing calling getAllLocationsWeatherData');
   }
 
   return (
@@ -67,7 +111,7 @@ function CardHolder({locations, units}) {
             weatherData.map(loc => (
               <WeatherCard location={loc} units={units}/>
             ))
-            : <span>Please search for a location above</span>
+            : <span id="tooltip">Please search for a location above</span>
         }
       </div>
     </section>

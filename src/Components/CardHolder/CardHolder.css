@@ -3,10 +3,6 @@
   height: 95%;
   width: 100%;
   background-color: #ebebeb;
-  /* 
-  background-image: url("../../../assets/sunnyskywithclouds.jpg");
-  background-repeat: no-repeat;
-  background-size: contain; */
 }
 .card-container {
   display: grid;
@@ -19,4 +15,8 @@
   margin: 0 auto;
   padding-top: 20px;
   padding-bottom: 20px;
+}
+.card-container #tooltip {
+  width: 100%;
+  font-size: 24px;
 }

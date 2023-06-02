@@ -9,24 +9,27 @@ function App() {
   //these locations will have a latitude, longitude, name and other info
   //lat and long will be sent to back end to store weather data for locations
   
-  //TODO: Handle long location names
-  //TODO: Make sure locations aren't too long of names somehow
   const [locations, setLocations] = useState([]);
   //TODO: be able to change unit type to metric
-  const [unitType, setUnitType] = useState('imperial'); 
+  const [unitType, setUnitType] = useState('metric'); 
 
   const addLocation = (loc) => {
     const updatedLocations = locations.slice();
     
     updatedLocations.push(loc);
-    console.log('This is updated locations: ', updatedLocations)
-
     setLocations(updatedLocations);
+  }
+  const toggleUnitType = () => {
+    if (unitType === 'imperial') {
+      setUnitType('metric')
+    } else if (unitType === 'metric') {
+      setUnitType('imperial');
+    }
   }
 
   return (
     <div className="app-container">
-      <Header addLocation={addLocation}/>
+      <Header addLocation={addLocation} toggleUnits={toggleUnitType}/>
       <CardHolder locations={locations} units={unitType}/>
       <Footer/>
     </div>

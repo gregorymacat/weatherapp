@@ -8,23 +8,25 @@ const router = express.Router();
 // Takes latitude and longitude recieved from /retrieve in Mapbox's Search Box API
 // Passes those two as parameters to OpenWeather's oneDayForecast API 
 router.get('/currentWeather', (req, res) => {
-  const {lat, lon} = req.query;
+  const {lat, lon, units} = req.query;
+  console.log('Units are: ', units);
+  console.log('Type of units: ', typeof(units));
 
   axios.get('https://api.openweathermap.org/data/2.5/weather', {
     params: {
       lat,
       lon,
-      units: 'imperial', //TODO: Add options for this eventually
+      units,
       appid: process.env.OPENWEATHER_KEY,
     }
   })
     .then(response => {
-      console.log('This is the response.data: ', response.data);
+      console.log('Weather response data: ', response.data);
       res.status(200).send(response.data);
     })
     .catch(err => {
       console.error('Error making request to OpenWeather API: ', err);
-      res.sendStatus(400);
+      res.status(err.response.status).send(err);
     })
 })
 

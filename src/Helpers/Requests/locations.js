@@ -9,10 +9,8 @@ const locationRequests = {
       }
     })
       .then(response => {
-        console.log('These are the suggestions: ', response.data);
-
         const localizedSuggestions = response.data.filter((location) => !!location.context.region);
-        console.log('These are the localizedSuggestions: ', localizedSuggestions);
+
         return localizedSuggestions;
       })
       .catch(err => {

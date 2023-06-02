@@ -12,19 +12,19 @@ function WeatherCard({location, units}) {
     //Regex helps remove leading zeroes without changing to a specific time format, allowing 24 hour time format
     return formattedCurrentTime.replace(/^(?:00:)?0?/, '');
   }
+
   const convertUnixTime = (unixTime) => {
     const date = new Date(unixTime * 1000);
     const formattedTime = date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
     return formattedTime.replace(/^(?:00:)?0?/, '');
   }
+
   const formatTemperature = () => {
-    if (units === 'imperial') {
-      return `${Math.round(location.weatherInfo.main.temp)}°F`
-    } else {
-      return `${location.weatherInfo.main.temp}°C`
-    }
+    console.log('Creating card adding temp');
+    return `${Math.round(location.weatherInfo.main.temp)}°${units === 'imperial' ? 'F' : 'C'}`;
   }
+
   const selectWeatherIcon = (condition) => {
     switch (condition) {
       //Snow

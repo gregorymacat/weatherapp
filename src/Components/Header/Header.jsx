@@ -15,7 +15,7 @@ import './Header.css';
 */
 const sessionToken = uuidv4();
 
-function Header({addLocation}) {
+function Header({addLocation, toggleUnits}) {
   const [input, setInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [showSearchError, setShowSearchError] = useState(false);
@@ -23,21 +23,23 @@ function Header({addLocation}) {
   const [chosenLocation, setChosenLocation] = useState({});
 
   useEffect(() => {
-    autofillInputField();
-  }, [chosenLocation])
+    if (Object.keys(chosenLocation).length !== 0) {
+      autofillInputField();
+    }
+  }, [chosenLocation]);
 
-  const handleChange = async (event) => {
+  const handleTextChange = async (event) => {
     const userInput = event.target.value;
     setInput(userInput);
 
+    if (userInput === '') {
+      setSuggestions([]);
+    }
     try {
       const localizedSuggestions = await locationRequests.getSuggestions(userInput, sessionToken);
-      console.log('Setting locations here: ', localizedSuggestions)
       if (localizedSuggestions.length > 0) {
-        console.log('Setting locations here: ', localizedSuggestions)
         setSuggestions(localizedSuggestions);
       } else {
-        console.log('Setting boolean to true')
         setShowSearchError(true);
       }
     } catch (err) {
@@ -46,11 +48,11 @@ function Header({addLocation}) {
     }
   }
 
+  const handleCheckboxChange = () => {
+    toggleUnits();
+  }
+
   const chooseSuggestion = (mapboxId) => {
-    //chooseSuggestion function should be in header and passed down to suggestion component
-    //chooseSuggestion function will make a get request to /retrieve
-    //https://api.mapbox.com/search/searchbox/v1/retrieve/{id}
-    //id will be from the suggestion object, mapbox_id
     axios.get('/suggestions/retrieve', {
       params: {
         'id': mapboxId,
@@ -59,22 +61,18 @@ function Header({addLocation}) {
     })
       .then(response => {
         const locationData = response.data;
-        console.log
+        const shortenedLocationName = locationData.name.length > 19
+          ? `${locationData.name.substring(0, 17)}...`
+          : locationData.name;
+
         const formattedLocation = {
-          locale: locationData.name,
+          locale: shortenedLocationName,
           region: locationData.context.region.region_code,
           name: `${locationData.name}, ${locationData.place_formatted}`,
           lat: locationData.coordinates.latitude,
           lon: locationData.coordinates.longitude,
         }
-        console.log('Retrieved location:\n', locationData);
 
-        //fill location information from that retrieve object into the input box
-        //city, (state) zip, country
-        //example data returned in /weatherapp/exampleData/ json files in here
-
-        //set location's longitude and latitude somewhere it can be used by weather card
-        //to retrieve weather data for that location
         setChosenLocation(formattedLocation);
         if (showSearchError) setShowSearchError(false);
       })
@@ -84,10 +82,8 @@ function Header({addLocation}) {
   }
 
   const autofillInputField = () => {
-    //get input field with search-location-input ID
-    //set its value to chosenLocation.placeFormatted
-    //set input to the same value as well
     const searchInput = document.getElementById('search-location-input');
+
     searchInput.value = chosenLocation.name;
     setInput(chosenLocation.name);
   }
@@ -105,7 +101,6 @@ function Header({addLocation}) {
     if (Object.keys(chosenLocation).length !== 0) {
       addLocation(chosenLocation);
     } else {
-      //display error above input bar explaining how to use app
       const localizedSuggestions = await locationRequests.getSuggestions(input, sessionToken);
       if (localizedSuggestions.length > 0) {
         setChosenLocation(localizedSuggestions[0]);
@@ -114,6 +109,7 @@ function Header({addLocation}) {
         setShowSearchError(true);
       }
     }
+    event.preventDefault();
   }
 
   const validateLocation = (loc) => {
@@ -129,13 +125,21 @@ function Header({addLocation}) {
         <h1>Weather</h1>
         <img src="titleicon.png"></img>
       </div>
+      <div className="switch-container">
+        <span id="metric">Metric</span>
+        <label className="switch">
+          <input type="checkbox" onChange={handleCheckboxChange}></input>
+          <span className="slider round"></span>
+        </label>
+        <span id="imperial">Imperial</span>
+      </div>
       <form onSubmit={handleSubmit}>
         {
           showSearchError ? 
             <span>Please enter a valid location or choose from the options below</span> 
             : null
         }
-        <input id="search-location-input" type="text" placeholder="City, State (or Country)" onChange={handleChange}></input>
+        <input id="search-location-input" type="text" placeholder="City, State (or Country)" onChange={handleTextChange}></input>
         <Suggestions locationSuggestions={suggestions} chooseSuggestion={chooseSuggestion}/>
       </form>
     </section>
