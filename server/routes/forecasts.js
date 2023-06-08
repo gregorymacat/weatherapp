@@ -9,8 +9,6 @@ const router = express.Router();
 // Passes those two as parameters to OpenWeather's oneDayForecast API 
 router.get('/currentWeather', (req, res) => {
   const {lat, lon, units} = req.query;
-  console.log('Units are: ', units);
-  console.log('Type of units: ', typeof(units));
 
   axios.get('https://api.openweathermap.org/data/2.5/weather', {
     params: {
@@ -21,7 +19,6 @@ router.get('/currentWeather', (req, res) => {
     }
   })
     .then(response => {
-      console.log('Weather response data: ', response.data);
       res.status(200).send(response.data);
     })
     .catch(err => {

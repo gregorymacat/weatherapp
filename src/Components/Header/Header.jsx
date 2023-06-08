@@ -15,10 +15,11 @@ import './Header.css';
 */
 const sessionToken = uuidv4();
 
-function Header({addLocation, toggleUnits}) {
+function Header({addLocation, toggleUnits, areaSelected, handleAreaSelect}) {
   const [input, setInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [showSearchError, setShowSearchError] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(true);
   //{locale: 'Houston', name: 'Houston Texas, United States', lat: 29.758938, lon: -95.367697}
   const [chosenLocation, setChosenLocation] = useState({});
 
@@ -27,6 +28,10 @@ function Header({addLocation, toggleUnits}) {
       autofillInputField();
     }
   }, [chosenLocation]);
+
+  useEffect(() => {
+    checkShowSuggestions();
+  }, [areaSelected]);
 
   const handleTextChange = async (event) => {
     const userInput = event.target.value;
@@ -73,13 +78,24 @@ function Header({addLocation, toggleUnits}) {
           lon: locationData.coordinates.longitude,
         }
 
+        setShowSuggestions(false);
         setChosenLocation(formattedLocation);
-        if (showSearchError) setShowSearchError(false);
+        setShowSearchError(false);
+
+        addLocation(formattedLocation);
       })
       .catch(err => {
         console.error(err);
       });
   }
+
+  const checkShowSuggestions = () => {
+    if (areaSelected === 'search-location-input') {
+      setShowSuggestions(true);
+    } else {
+      setShowSuggestions(false);
+    }
+  };
 
   const autofillInputField = () => {
     const searchInput = document.getElementById('search-location-input');
@@ -120,27 +136,31 @@ function Header({addLocation, toggleUnits}) {
 
   //need to place suggestions component beneath input element
   return (
-    <section id="header">
+    <section id="header" onClick={handleAreaSelect}>
       <div className="title-container">
         <h1>Weather</h1>
         <img src="titleicon.png"></img>
       </div>
       <div className="switch-container">
-        <span id="metric">Metric</span>
+        <span id="imperial">Imperial</span>
         <label className="switch">
           <input type="checkbox" onChange={handleCheckboxChange}></input>
           <span className="slider round"></span>
         </label>
-        <span id="imperial">Imperial</span>
+        <span id="metric">Metric</span>
       </div>
-      <form onSubmit={handleSubmit}>
+      <form id="search-location-container" onSubmit={handleSubmit} onClick={handleAreaSelect}>
         {
           showSearchError ? 
             <span>Please enter a valid location or choose from the options below</span> 
             : null
         }
         <input id="search-location-input" type="text" placeholder="City, State (or Country)" onChange={handleTextChange}></input>
-        <Suggestions locationSuggestions={suggestions} chooseSuggestion={chooseSuggestion}/>
+        {
+          showSuggestions ? 
+            <Suggestions locationSuggestions={suggestions} chooseSuggestion={chooseSuggestion}/>
+            : null
+        }
       </form>
     </section>
   )

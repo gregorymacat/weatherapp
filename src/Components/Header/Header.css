@@ -50,20 +50,8 @@
   border-bottom: 2px solid #787878;
   padding: 7px;
 }
-#header ul {
-  list-style: none;
-  /* left: -1%; */
-  width: 282px;
-  border-width: 0px 2px 2px 2px;
-  border-color: grey;
-  border-style: solid;
-  top: 34%;
-  z-index: 1;
-  background-color: #4bb8ff;
-  position: absolute;
-}
-#header li {
-  padding: 10px;
+#header input::placeholder {
+  color: #cdcdcd;
 }
 
 /*
@@ -82,8 +70,8 @@
   position: absolute;
   top: 25%;
 }
-.switch-container #imperial {
-  left: 64%;
+.switch-container #metric {
+  right: 4%;
 }
 
 /* The switch - the box around the slider */
@@ -91,7 +79,7 @@
   position: absolute;
   width: 60px;
   height: 34px;
-  left: 28%;
+  left: 35%;
 }
 
 /* Hide default HTML checkbox */

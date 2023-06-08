@@ -21,7 +21,6 @@ function WeatherCard({location, units}) {
   }
 
   const formatTemperature = () => {
-    console.log('Creating card adding temp');
     return `${Math.round(location.weatherInfo.main.temp)}°${units === 'imperial' ? 'F' : 'C'}`;
   }
 

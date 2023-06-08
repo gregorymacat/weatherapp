@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, Suspense} from 'react';
 
-import CardHolder from './Components/CardHolder/CardHolder.jsx';
+import Cards from './Components/Cards/Cards.jsx';
 import Footer from './Components/Footer/Footer.jsx';
 import Header from './Components/Header/Header.jsx';
+import Loading from './Components/Loading/Loading.jsx';
 
 function App() {
   //locations will be an array of objects each from the Open Box API's suggested locations
@@ -10,9 +11,12 @@ function App() {
   //lat and long will be sent to back end to store weather data for locations
   
   const [locations, setLocations] = useState([]);
-  //TODO: be able to change unit type to metric
-  const [unitType, setUnitType] = useState('metric'); 
+  const [unitType, setUnitType] = useState('imperial'); 
+  const [areaSelected, setAreaSelected] = useState('');
 
+  const updateAreaSelected = (event) => {
+    setAreaSelected(event.target.id);
+  }
   const addLocation = (loc) => {
     const updatedLocations = locations.slice();
     
@@ -29,9 +33,9 @@ function App() {
 
   return (
     <div className="app-container">
-      <Header addLocation={addLocation} toggleUnits={toggleUnitType}/>
-      <CardHolder locations={locations} units={unitType}/>
-      <Footer/>
+      <Header addLocation={addLocation} toggleUnits={toggleUnitType} handleAreaSelect={updateAreaSelected} areaSelected={areaSelected}/>
+      <Cards locations={locations} units={unitType} handleAreaSelect={updateAreaSelected}/>
+      <Footer handleAreaSelect={updateAreaSelected}/>
     </div>
   )
 }
