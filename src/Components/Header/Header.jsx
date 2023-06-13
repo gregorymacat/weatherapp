@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
 
 import locationRequests from '../../Helpers/Requests/locations';
 import Suggestions from '../Suggestions/Suggestions.jsx';
@@ -13,9 +12,8 @@ import './Header.css';
   Need to keep track of mapbox_id
 
 */
-const sessionToken = uuidv4();
 
-function Header({addLocation, toggleUnits, areaSelected, handleAreaSelect}) {
+function Header({addLocation, toggleUnits, areaSelected, handleAreaSelect, sessionKey}) {
   const [input, setInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [showSearchError, setShowSearchError] = useState(false);
@@ -41,7 +39,7 @@ function Header({addLocation, toggleUnits, areaSelected, handleAreaSelect}) {
       setSuggestions([]);
     }
     try {
-      const localizedSuggestions = await locationRequests.getSuggestions(userInput, sessionToken);
+      const localizedSuggestions = await locationRequests.getSuggestions(userInput, sessionKey);
       if (localizedSuggestions.length > 0) {
         setSuggestions(localizedSuggestions);
       } else {
@@ -61,7 +59,7 @@ function Header({addLocation, toggleUnits, areaSelected, handleAreaSelect}) {
     axios.get('/suggestions/retrieve', {
       params: {
         'id': mapboxId,
-        'sessionToken': sessionToken,
+        'sessionToken': sessionKey,
       }
     })
       .then(response => {
@@ -117,7 +115,7 @@ function Header({addLocation, toggleUnits, areaSelected, handleAreaSelect}) {
     if (Object.keys(chosenLocation).length !== 0) {
       addLocation(chosenLocation);
     } else {
-      const localizedSuggestions = await locationRequests.getSuggestions(input, sessionToken);
+      const localizedSuggestions = await locationRequests.getSuggestions(input, sessionKey);
       if (localizedSuggestions.length > 0) {
         setChosenLocation(localizedSuggestions[0]);
         if (showSearchError) setShowSearchError(false);

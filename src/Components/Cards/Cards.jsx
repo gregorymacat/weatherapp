@@ -18,7 +18,7 @@ const evoraExampleData = {
   weatherInfo: exampleEvoWeatherData,
 }
 
-function Cards({locations, units, handleAreaSelect}) {
+function Cards({locations, units, handleAreaSelect, removeLocation}) {
   //[houstonExampleData, evoraExampleData]
   const [weatherData, setWeatherData] = useState([]);
 
@@ -28,6 +28,8 @@ function Cards({locations, units, handleAreaSelect}) {
 
       // getOneLocationsWeatherData(lastLocation);
       getAllLocationsWeatherData();
+    } else if (locations.length === 0){
+      setWeatherData([]);
     }
   }, [locations, units]);
 
@@ -55,7 +57,6 @@ function Cards({locations, units, handleAreaSelect}) {
           reject(err);
         })
     })
-    
   }
 
   const getAllLocationsWeatherData = () => {
@@ -63,7 +64,7 @@ function Cards({locations, units, handleAreaSelect}) {
       return getOneLocationsWeatherData(location);
     });
 
-    weatherDataPromises.push(new Promise((resolve, reject) => {setTimeout(() => {reject(new Error)}, 5000)}));
+    // weatherDataPromises.push(new Promise((resolve, reject) => {setTimeout(() => {reject(new Error)}, 5000)}));
 
     Promise.allSettled(weatherDataPromises)
       .then((results) => {
@@ -85,9 +86,9 @@ function Cards({locations, units, handleAreaSelect}) {
         {
           weatherData.length > 0 ? 
             weatherData.map(loc => (
-              <WeatherCard location={loc} units={units}/>
+              <WeatherCard location={loc} units={units} removeLocation={removeLocation}/>
             ))
-            : <span id="tooltip">Please search for a location above</span>
+            : <span id="tooltip">Please search for a location at the top right</span>
         }
       </div>
     </section>

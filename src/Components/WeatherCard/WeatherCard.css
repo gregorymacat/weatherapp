@@ -1,4 +1,4 @@
-.card-body1 {
+.card-body {
   font-size: 12px;
   display: flex;
   flex-direction: column;
@@ -7,7 +7,7 @@
   border: 1px solid rgba(0,0,0,.125);
   border-radius: 25px;
   max-width: 80%;
-  padding: 5%;
+  padding: 4%;
   background-color: #F9F9F9;
   font-family: 'Nunito', sans-serif;
 }
@@ -39,8 +39,22 @@
   align-items: center;
   font-size: 1.3em;
 }
+.card-bottom-right-container {
+  position: relative;
+  height: 100%;
+}
+.card-bottom-right-container span {
+  right: 0px;
+  bottom: 0px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #cf0000;
+  position: absolute;
+}
 .card-bottom img {
   margin-right: 10%;
+  position: relative;
+  top: 20%;
 }
 .card-weather-info {
   max-width: 50%;

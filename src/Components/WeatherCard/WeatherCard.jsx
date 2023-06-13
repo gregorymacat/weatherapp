@@ -1,8 +1,16 @@
 import React from 'react';
 import './WeatherCard.css';
 
-function WeatherCard({location, units}) {
+function WeatherCard({location, units, removeLocation}) {
   //TODO: Need to be able to remove a card
+  const handleDeletion = (event) => {
+    console.log(event.target.id);
+    const removableLocation = {
+      name: event.target.id.split(',')[0],
+      region: event.target.id.split(',')[1],
+    }
+    removeLocation(removableLocation);
+  }
   const getCurrentTime = (timezoneOffset) => {
     const date = new Date();
     const utc = date.getTime() + (date.getTimezoneOffset() * 60000);
@@ -52,7 +60,7 @@ function WeatherCard({location, units}) {
 
   //TODO: Add precipitation maybe? Either that or it can be on other side of card
   return (
-    <div className="card-body1">
+    <div className="card-body">
       <div className="card-top">
         <h2 id="location-name">{location.name}, {location.region}</h2>
         <h2>{time}</h2>
@@ -79,8 +87,10 @@ function WeatherCard({location, units}) {
             </div>
           </div>
         </div>
-        {/* Weather conditions should be dynamically generated icons here */}
-        {selectWeatherIcon(location.weatherInfo.weather[0].main)}
+        <div className="card-bottom-right-container">
+          {selectWeatherIcon(location.weatherInfo.weather[0].main)}
+          <span id={`${location.name},${location.region}`} onClick={handleDeletion}>x</span>
+        </div>
       </div>
     </div>
   )
